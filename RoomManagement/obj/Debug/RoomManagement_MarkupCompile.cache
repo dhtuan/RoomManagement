@@ -1,0 +1,20 @@
+﻿RoomManagement
+
+
+winexe
+C#
+.cs
+D:\My-CV\Geralt's Farm\WPF-RoomManagement\RoomManagement\obj\Debug\
+RoomManagement
+none
+false
+DEBUG;TRACE
+D:\My-CV\Geralt's Farm\WPF-RoomManagement\RoomManagement\App.xaml
+16-800529740
+4-1592361959
+362116114610
+20793362416
+Service\AddServiceWindow.xaml;Service\EditServiceWindow.xaml;Reservation\AddReservationWindow.xaml;Reservation\ReservationDetailWindow.xaml;Guest\AddGuestWindow.xaml;Category\AddCategoryWindow.xaml;Guest\EditGuestWindow.xaml;Guest\GuestControl.xaml;Reservation\ReservationControl.xaml;Room\AddRoomWindow.xaml;Category\CategoryControl.xaml;Category\EditCategoryWindow.xaml;Room\EditRoomWindow.xaml;MainWindow.xaml;Room\RoomControl.xaml;Service\ServiceControl.xaml;
+
+False
+

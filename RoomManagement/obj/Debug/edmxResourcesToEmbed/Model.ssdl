@@ -1,0 +1,171 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="RoomDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Category">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="isDeleted" Type="bit" />
+  </EntityType>
+  <EntityType Name="Guest">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="Telephone" Type="varchar" MaxLength="10" />
+    <Property Name="IdentityCard" Type="varchar" MaxLength="12" />
+    <Property Name="isDeleted" Type="bit" />
+  </EntityType>
+  <EntityType Name="Reservation">
+    <Key>
+      <PropertyRef Name="RoomID" />
+      <PropertyRef Name="GuestID" />
+    </Key>
+    <Property Name="RoomID" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="GuestID" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="Date" Type="datetime" />
+    <Property Name="StartDate" Type="date" />
+    <Property Name="EndDate" Type="date" />
+    <Property Name="TotalPrice" Type="float" />
+    <Property Name="isDeleted" Type="bit" />
+  </EntityType>
+  <EntityType Name="ReservationDetail">
+    <Key>
+      <PropertyRef Name="RoomID" />
+      <PropertyRef Name="GuestID" />
+      <PropertyRef Name="ServiceID" />
+      <PropertyRef Name="Date" />
+    </Key>
+    <Property Name="RoomID" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="GuestID" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="ServiceID" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="Date" Type="datetime" Nullable="false" />
+    <Property Name="isDeleted" Type="bit" />
+  </EntityType>
+  <EntityType Name="Room">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="CategoryID" Type="varchar" MaxLength="10" />
+    <Property Name="Price" Type="float" />
+    <Property Name="Status" Type="nvarchar" MaxLength="20" />
+    <Property Name="Picture" Type="ntext" />
+    <Property Name="isDeleted" Type="bit" />
+  </EntityType>
+  <EntityType Name="Service">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="Price" Type="float" />
+    <Property Name="isDeleted" Type="bit" />
+  </EntityType>
+  <Association Name="FK_R_CT">
+    <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
+    <End Role="Room" Type="Self.Room" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Category">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Room">
+        <PropertyRef Name="CategoryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RD_G">
+    <End Role="Guest" Type="Self.Guest" Multiplicity="1" />
+    <End Role="ReservationDetail" Type="Self.ReservationDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Guest">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ReservationDetail">
+        <PropertyRef Name="GuestID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RD_R">
+    <End Role="Room" Type="Self.Room" Multiplicity="1" />
+    <End Role="ReservationDetail" Type="Self.ReservationDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Room">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ReservationDetail">
+        <PropertyRef Name="RoomID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RD_S">
+    <End Role="Service" Type="Self.Service" Multiplicity="1" />
+    <End Role="ReservationDetail" Type="Self.ReservationDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Service">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ReservationDetail">
+        <PropertyRef Name="ServiceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Re_G">
+    <End Role="Guest" Type="Self.Guest" Multiplicity="1" />
+    <End Role="Reservation" Type="Self.Reservation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Guest">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Reservation">
+        <PropertyRef Name="GuestID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Re_R">
+    <End Role="Room" Type="Self.Room" Multiplicity="1" />
+    <End Role="Reservation" Type="Self.Reservation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Room">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Reservation">
+        <PropertyRef Name="RoomID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="RoomDBModelStoreContainer">
+    <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Guest" EntityType="Self.Guest" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Reservation" EntityType="Self.Reservation" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ReservationDetail" EntityType="Self.ReservationDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Room" EntityType="Self.Room" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Service" EntityType="Self.Service" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_R_CT" Association="Self.FK_R_CT">
+      <End Role="Category" EntitySet="Category" />
+      <End Role="Room" EntitySet="Room" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RD_G" Association="Self.FK_RD_G">
+      <End Role="Guest" EntitySet="Guest" />
+      <End Role="ReservationDetail" EntitySet="ReservationDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RD_R" Association="Self.FK_RD_R">
+      <End Role="Room" EntitySet="Room" />
+      <End Role="ReservationDetail" EntitySet="ReservationDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RD_S" Association="Self.FK_RD_S">
+      <End Role="Service" EntitySet="Service" />
+      <End Role="ReservationDetail" EntitySet="ReservationDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Re_G" Association="Self.FK_Re_G">
+      <End Role="Guest" EntitySet="Guest" />
+      <End Role="Reservation" EntitySet="Reservation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Re_R" Association="Self.FK_Re_R">
+      <End Role="Room" EntitySet="Room" />
+      <End Role="Reservation" EntitySet="Reservation" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
